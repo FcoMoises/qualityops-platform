@@ -8603,16 +8603,125 @@ tbody tr:hover td{background:#0f1d2d!important}
   }
 }
 
+</style><style>
+/* QualityOps brand alignment — supplied visual reference, 2026-08-31 */
+:root{
+  --qo-brand-navy:#031a38;
+  --qo-brand-navy-deep:#02142d;
+  --qo-brand-blue:#0878ff;
+  --qo-brand-blue-bright:#1394ff;
+  --qo-brand-ink:#071a36;
+  --qo-brand-line:#d9e6f4;
+  --qo-brand-canvas:#f7fbff;
+}
+
+#publicLanding.qo-public-home{
+  --qo-ref-navy:var(--qo-brand-navy);
+  --qo-ref-text:var(--qo-brand-ink);
+  --qo-ref-blue:var(--qo-brand-blue);
+  --qo-ref-border:var(--qo-brand-line);
+  --qo-navy-950:var(--qo-brand-navy-deep);
+  --qo-navy-900:var(--qo-brand-navy);
+  --qo-blue-700:#0567dc;
+  --qo-blue-600:var(--qo-brand-blue);
+  --qo-blue-500:var(--qo-brand-blue-bright);
+  --qo-blue-100:#e8f3ff;
+  --qo-blue-050:#f5faff;
+  --qo-border:var(--qo-brand-line);
+  --qo-border-strong:#bcd2ea;
+  --qo-text:var(--qo-brand-ink);
+  --qo-shadow-sm:0 5px 18px rgba(3,26,56,.055);
+  --qo-shadow-md:0 14px 38px rgba(3,26,56,.085);
+  --qo-shadow-lg:0 24px 64px rgba(3,26,56,.14);
+}
+
+#publicLanding.qo-public-home .publicHeader{
+  background:linear-gradient(100deg,var(--qo-brand-navy-deep) 0%,var(--qo-brand-navy) 70%,#052654 100%);
+  border-bottom-color:rgba(19,148,255,.2);
+  box-shadow:0 8px 24px rgba(2,20,45,.16);
+}
+#publicLanding.qo-public-home .publicBrand{gap:10px;text-decoration:none}
+#publicLanding.qo-public-home .publicBrandMark{
+  width:40px;height:44px;color:var(--qo-brand-blue-bright);
+  filter:drop-shadow(0 0 9px rgba(19,148,255,.23));
+}
+#publicLanding.qo-public-home .qo-brand-symbol{width:40px;height:44px}
+#publicLanding.qo-public-home .qo-brand-hex-outer{stroke:var(--qo-brand-blue);stroke-width:2.4}
+#publicLanding.qo-public-home .qo-brand-hex-inner{stroke:var(--qo-brand-blue-bright);stroke-width:1.8;opacity:.82}
+#publicLanding.qo-public-home .qo-brand-check{stroke:#fff;stroke-width:2.15}
+#publicLanding.qo-public-home .publicBrandCopy{display:grid;gap:3px;line-height:1}
+#publicLanding.qo-public-home .publicBrandCopy strong{font-size:17px;letter-spacing:-.03em}
+#publicLanding.qo-public-home .qo-word-quality{color:#fff}
+#publicLanding.qo-public-home .qo-word-ops{color:var(--qo-brand-blue-bright)}
+#publicLanding.qo-public-home .publicBrandCopy span{
+  color:#b9cbe0;font-size:7px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
+}
+#publicLanding.qo-public-home .publicNav a,
+#publicLanding.qo-public-home .publicNav button,
+#publicLanding.qo-public-home .linkBtn{transition:color .18s ease,opacity .18s ease}
+#publicLanding.qo-public-home .publicNav a:hover,
+#publicLanding.qo-public-home .publicNav button:hover,
+#publicLanding.qo-public-home .linkBtn:hover{color:#78c3ff}
+#publicLanding.qo-public-home .publicHeader .publicPrimary,
+#publicLanding.qo-public-home .publicPrimary{
+  background:linear-gradient(135deg,var(--qo-brand-blue) 0%,#0866eb 100%);
+  border-color:#158cff;
+  box-shadow:0 9px 24px rgba(8,120,255,.24);
+}
+#publicLanding.qo-public-home .publicPrimary:hover{
+  background:linear-gradient(135deg,var(--qo-brand-blue-bright) 0%,var(--qo-brand-blue) 100%);
+  box-shadow:0 12px 28px rgba(8,120,255,.3);
+}
+#publicLanding.qo-public-home #inicio-publico .heroCopy h1,
+#publicLanding.qo-public-home .sectionHead h2{color:var(--qo-brand-ink)}
+#publicLanding.qo-public-home #inicio-publico .heroCopy h1 em,
+#publicLanding.qo-public-home .kicker{color:var(--qo-brand-blue)}
+#publicLanding.qo-public-home #inicio-publico .heroBadge:first-child{
+  color:#0568d7;background:#e7f3ff;border-color:#c9e2ff;
+}
+#publicLanding.qo-public-home #inicio-publico .heroBadge.alt{
+  color:#076fdf;background:transparent;border-color:transparent;
+}
+#publicLanding.qo-public-home #inicio-publico .checkMini{
+  color:#fff;background:var(--qo-brand-blue);border-color:var(--qo-brand-blue);
+  box-shadow:0 5px 12px rgba(8,120,255,.18);
+}
+#publicLanding.qo-public-home .processRichCard,
+#publicLanding.qo-public-home .publicCard,
+#publicLanding.qo-public-home .pricingCard{
+  border-color:var(--qo-brand-line);
+  box-shadow:0 10px 28px rgba(3,26,56,.055);
+}
+
+#appRoot.qo-app{
+  --qo-navy-950:var(--qo-brand-navy-deep);
+  --qo-navy-900:var(--qo-brand-navy);
+  --qo-blue-600:var(--qo-brand-blue);
+  --qo-blue-500:var(--qo-brand-blue-bright);
+  --qo-blue-100:#e8f3ff;
+  --qo-bg:var(--qo-brand-canvas);
+  --qo-border:var(--qo-brand-line);
+  --qo-text:var(--qo-brand-ink);
+}
+#appRoot.qo-app .side{background:linear-gradient(180deg,var(--qo-brand-navy-deep),var(--qo-brand-navy))}
+#appRoot.qo-app .side button.active,
+#appRoot.qo-app .primary{background:linear-gradient(135deg,var(--qo-brand-blue),#0866eb);border-color:var(--qo-brand-blue)}
+
+@media(max-width:700px){
+  #publicLanding.qo-public-home .publicBrandCopy strong{font-size:15px}
+  #publicLanding.qo-public-home .publicBrandCopy span{font-size:6.5px;letter-spacing:.16em}
+}
 </style></head><body>
 <div class="publicLanding qo-public qo-public-home" data-home-areas="6" data-home-checks="18" data-home-duration="≈ 8 min" data-home-output="PDF" id="publicLanding">
 <header class="publicHeader">
 <div class="publicContainer publicHeaderInner qo-home-width">
 <a aria-label="QualityOps ISO Readiness" class="publicBrand" href="#inicio-publico">
-<div class="publicBrandMark"><svg aria-hidden="true" class="qo-brand-symbol" viewbox="0 0 40 44">
-<path d="M20 2.5 36 11v22L20 41.5 4 33V11L20 2.5Z" fill="none" stroke="currentColor" stroke-width="2.4"></path>
-<circle cx="20" cy="22" fill="none" r="5.3" stroke="currentColor" stroke-width="2.2"></circle>
+<div class="publicBrandMark"><svg aria-hidden="true" class="qo-brand-symbol" viewbox="0 0 42 46">
+<path class="qo-brand-hex-outer" d="M21 2.5 38 12v22L21 43.5 4 34V12L21 2.5Z" fill="none" stroke-linejoin="round"></path>
+<path class="qo-brand-hex-inner" d="M21 9 32 15.2v14.6L21 36 10 29.8V15.2L21 9Z" fill="none" stroke-linejoin="round"></path>
+<path class="qo-brand-check" d="m15.5 22.7 4 4 7.7-8" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
 </svg></div>
-<div><strong>QualityOps</strong><span>ISO Readiness</span></div>
+<div class="publicBrandCopy"><strong><span class="qo-word-quality">Quality</span><span class="qo-word-ops">Ops</span></strong><span>ISO readiness. Simplified.</span></div>
 </a>
 <nav aria-label="Navegación principal" class="publicNav">
 <a href="#como-funciona">¿Cómo funciona?</a>
