@@ -1,0 +1,191 @@
+:root{
+  --qo-navy-950:#06182B;--qo-navy-900:#0A2540;
+  --qo-blue-600:#087FE5;--qo-blue-500:#168AF0;--qo-blue-100:#EAF4FF;
+  --qo-white:#FFFFFF;--qo-bg:#F6F9FC;--qo-surface:#FFFFFF;--qo-border:#DCE6EF;
+  --qo-text:#0A2540;--qo-muted:#667C91;
+  --qo-success:#2FA85A;--qo-warning:#D59A18;--qo-danger:#D9473F;
+  --qo-radius-sm:9px;--qo-radius-md:12px;--qo-radius-lg:16px;
+  --qo-shadow-sm:0 3px 10px rgba(15,43,73,.025);
+  --qo-shadow-md:0 5px 18px rgba(15,43,73,.04);
+  --qo-shadow-lg:0 18px 45px rgba(15,43,73,.10);
+  --qo-ease:cubic-bezier(.22,.61,.36,1);
+}
+
+/* HOME: exact structural tuning to approved 1536×1024 reference */
+#publicLanding.qo-public-home .qoReferenceHero{min-height:597px}
+#publicLanding.qo-public-home .qoReferenceHeroGrid{grid-template-columns:52.4% 47.6%;min-height:597px}
+#publicLanding.qo-public-home .qoReferenceHeroCopy{align-items:flex-start;padding:40px 54px 16px 3.52vw}
+#publicLanding.qo-public-home .qoReferenceHeroCopyInner{max-width:650px}
+#publicLanding.qo-public-home .qoEditionInfo{margin-bottom:32px}
+#publicLanding.qo-public-home .qoHeroHeadline{font-size:clamp(52px,3.7vw,60px);line-height:1.04}
+#publicLanding.qo-public-home .qoHeroLead{margin-top:24px;max-width:650px;font-size:17px;line-height:1.62}
+#publicLanding.qo-public-home .qoHeroBenefits{margin:27px 0;gap:16px 37px}
+#publicLanding.qo-public-home .qoHeroTrust{margin-top:40px}
+#publicLanding.qo-public-home .qoReferenceHeroVisual{min-height:597px}
+#publicLanding.qo-public-home .qoHeroPhoto img{object-position:52% 47%}
+#publicLanding.qo-public-home .qoHeroProductDemo{left:-26%;top:68px;width:405px;transform:none}
+#publicLanding.qo-public-home .qoHeroDashboardCard{min-height:355px}
+#publicLanding.qo-public-home .qoHeroKpi{min-height:108px}
+#publicLanding.qo-public-home .qoHeroDashboardLower section{min-height:145px}
+#publicLanding.qo-public-home .qoProcessSection{padding:31px 0 57px}
+#publicLanding.qo-public-home .qoProcessContainer{width:82.6vw;max-width:1280px}
+#publicLanding.qo-public-home .qoProcessHead{margin-bottom:26px}
+
+/* APP SHELL */
+#appRoot.qo-app{background:var(--qo-bg);color:var(--qo-text);font-family:Inter,"Segoe UI",Arial,sans-serif}
+#appRoot.qo-app .top{background:#fff;border-bottom:1px solid var(--qo-border);box-shadow:0 3px 12px rgba(15,43,73,.035)}
+#appRoot.qo-app .brandMark{background:var(--qo-navy-950)}
+#appRoot.qo-app .header{background:#fff}
+#appRoot.qo-app .header h1{color:var(--qo-text);font-weight:850;letter-spacing:-.025em}
+#appRoot.qo-app .header h2{color:var(--qo-blue-600)}
+#appRoot.qo-app .header p,#appRoot.qo-app .meta{color:var(--qo-muted)}
+#appRoot.qo-app .meta strong{color:var(--qo-text)}
+#appRoot.qo-app .shell,#appRoot.qo-app .main{background:var(--qo-bg)}
+#appRoot.qo-app .side{background:var(--qo-navy-900);box-shadow:none}
+#appRoot.qo-app .side button{display:flex;align-items:center;gap:9px;min-height:44px;border-radius:9px;color:rgba(255,255,255,.72);transition:background-color 180ms var(--qo-ease),color 180ms var(--qo-ease)}
+#appRoot.qo-app .side button:hover{background:rgba(255,255,255,.06);color:#fff}
+#appRoot.qo-app .side button.active{background:var(--qo-blue-600);color:#fff}
+#appRoot.qo-app .side button.lockedNav{color:rgba(255,255,255,.45)}
+#appRoot.qo-app .qoSideIcon{width:17px;height:17px;flex:0 0 17px;display:flex;align-items:center;justify-content:center}
+#appRoot.qo-app .qoSideIcon svg,#appRoot.qo-app .qoInlineIcon svg,#appRoot.qo-app .qoMenuGlyph svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#appRoot.qo-app .setupSidebarCard{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.10);box-shadow:none}
+#appRoot.qo-app .setupProgressTrack{stroke:rgba(255,255,255,.14)}
+#appRoot.qo-app .setupProgressValue{stroke:var(--qo-blue-500)}
+#appRoot.qo-app .eyebrow{color:var(--qo-blue-600);font-size:11px;font-weight:850;letter-spacing:.10em}
+
+/* Shared surfaces */
+#appRoot.qo-app .setupCard,#appRoot.qo-app .setupContextPanel,#appRoot.qo-app .assessmentProgressBar,
+#appRoot.qo-app .qcard,#appRoot.qo-app .contextCard,#appRoot.qo-app .quickCard,
+#appRoot.qo-app .card,#appRoot.qo-app .metricCard,#appRoot.qo-app .panel,#appRoot.qo-app .auditMetaItem,
+#appRoot.qo-app .detailItem,#appRoot.qo-app .actionCard,#appRoot.qo-app .riskCell,
+#appRoot.qo-app .reportCard,#appRoot.qo-app .reportSummaryCard,#appRoot.qo-app .reportEmpty,
+#appRoot.qo-app .generationBox,#appRoot.qo-app .downloadBox,#appRoot.qo-app .evaluatedOrgCard,
+#appRoot.qo-app .freeResultOverview,#appRoot.qo-app .premiumResultIntro,#appRoot.qo-app .freeResultPanel,
+#appRoot.qo-app .postAssessmentNextStep{
+  background:var(--qo-surface);border:1px solid var(--qo-border);border-radius:var(--qo-radius-lg);
+  color:var(--qo-text);box-shadow:var(--qo-shadow-md)
+}
+
+/* Inputs / selects / checks */
+#appRoot.qo-app .setupField label,#appRoot.qo-app .field label{color:#425D73;font-weight:750}
+#appRoot.qo-app .setupField input,#appRoot.qo-app .setupField select,#appRoot.qo-app .field input,#appRoot.qo-app .field select{
+  min-height:48px;background:#fff;border:1px solid var(--qo-border);border-radius:var(--qo-radius-sm);color:var(--qo-text)
+}
+#appRoot.qo-app .setupField input:focus,#appRoot.qo-app .setupField select:focus,#appRoot.qo-app .field input:focus,#appRoot.qo-app .field select:focus{
+  border-color:var(--qo-blue-600);box-shadow:0 0 0 3px rgba(8,127,229,.09);outline:none
+}
+#appRoot.qo-app .setupCheck{background:#fff;border-color:var(--qo-border);border-radius:var(--qo-radius-sm);color:var(--qo-text)}
+#appRoot.qo-app .setupCheck:has(input:checked){background:#F3F9FE;border-color:var(--qo-blue-600);box-shadow:0 0 0 2px rgba(8,127,229,.05)}
+#appRoot.qo-app .setupCheck input[type="checkbox"],#appRoot.qo-app .reportCheck input[type="checkbox"]{
+  appearance:none;width:18px;height:18px;display:grid;place-items:center;border:1.5px solid #98ADBD;border-radius:5px;background:#fff
+}
+#appRoot.qo-app .setupCheck input[type="checkbox"]::after,#appRoot.qo-app .reportCheck input[type="checkbox"]::after{
+  content:"";width:8px;height:4px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) scale(0)
+}
+#appRoot.qo-app .setupCheck input[type="checkbox"]:checked,#appRoot.qo-app .reportCheck input[type="checkbox"]:checked{border-color:var(--qo-blue-600);background:var(--qo-blue-600)}
+#appRoot.qo-app .setupCheck input[type="checkbox"]:checked::after,#appRoot.qo-app .reportCheck input[type="checkbox"]:checked::after{transform:rotate(-45deg) scale(1)}
+
+/* Questions / states */
+#appRoot.qo-app .progressTrack{background:#E6EEF4}
+#appRoot.qo-app #progressBar{background:var(--qo-blue-600)}
+#appRoot.qo-app .guidanceStrip{background:#F1F7FD;border-color:#C9E1F4;border-radius:var(--qo-radius-sm);color:#35627F}
+#appRoot.qo-app .tipCard{background:#FFF8EA;border-color:#EBCF95;border-radius:var(--qo-radius-lg);box-shadow:var(--qo-shadow-sm)}
+#appRoot.qo-app .autosaveBanner{background:#F2FAF4;border-color:#CBE5D2;border-radius:var(--qo-radius-lg);box-shadow:var(--qo-shadow-sm)}
+#appRoot.qo-app .qoInlineIcon{width:17px;height:17px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 17px}
+#appRoot.qo-app .saveExitBtn,#appRoot.qo-app .responsesLink,#appRoot.qo-app .contextTitle,#appRoot.qo-app .tipTitle{display:flex;align-items:center;gap:7px}
+
+/* Radio system */
+#appRoot.qo-app .opt{background:#fff;border:1px solid var(--qo-border);border-radius:var(--qo-radius-md);color:var(--qo-text);box-shadow:none;transition:border-color 200ms var(--qo-ease),background-color 200ms var(--qo-ease),box-shadow 200ms var(--qo-ease)}
+#appRoot.qo-app .opt:hover{border-color:#A9CCE4;background:#FBFDFF}
+#appRoot.qo-app .opt input[type="radio"]{appearance:none;width:20px;height:20px;flex:0 0 20px;display:grid;place-items:center;margin:0;border:1.6px solid #98ADBD;border-radius:50%;background:#fff}
+#appRoot.qo-app .opt input[type="radio"]::after{content:"";width:7px;height:7px;border-radius:50%;background:#fff;transform:scale(0)}
+#appRoot.qo-app .opt input[type="radio"]:checked{border-color:var(--qo-blue-600);background:var(--qo-blue-600)}
+#appRoot.qo-app .opt input[type="radio"]:checked::after{transform:scale(1)}
+#appRoot.qo-app .opt:has(input:checked),#appRoot.qo-app .opt.selected{background:#F3F9FE;border-color:var(--qo-blue-600);box-shadow:0 0 0 3px rgba(8,127,229,.06)}
+#appRoot.qo-app .opt.yes .optIcon{background:#ECF7EC;color:#379448}
+#appRoot.qo-app .opt.partial .optIcon{background:#FFF5DE;color:#A66B00}
+#appRoot.qo-app .opt.no .optIcon{background:#FDECE9;color:#D9473F}
+
+/* Quick nav */
+#appRoot.qo-app .quickQ{background:#fff;border-color:var(--qo-border);color:#526A7D}
+#appRoot.qo-app .quickQ.current{background:var(--qo-blue-600);border-color:var(--qo-blue-600);color:#fff}
+#appRoot.qo-app .quickQ.answered{background:#EDF8F0;border-color:#B9DFC3;color:#2F7D43}
+#appRoot.qo-app .quickQ.pending,#appRoot.qo-app .quickQ.upcoming{background:#fff;border-color:var(--qo-border);color:#526A7D}
+#appRoot.qo-app .quickQ.marked{background:#FFF8E7;border-color:#E5BE67;color:#8B6300}
+
+/* Buttons */
+#appRoot.qo-app .primary{background:var(--qo-blue-600);border-color:var(--qo-blue-600);color:#fff;border-radius:var(--qo-radius-sm)}
+#appRoot.qo-app .secondary{background:#fff;border-color:var(--qo-border);color:var(--qo-text);border-radius:var(--qo-radius-sm)}
+#appRoot.qo-app .tertiary,#appRoot.qo-app .resultTertiary{background:transparent;color:var(--qo-blue-600)}
+#appRoot.qo-app .markBtn.active{background:#FFF8E7;border-color:#E1B958;color:#8B6300}
+
+/* Results / detail views */
+#appRoot.qo-app .freeResultOverview{background:#fff;color:var(--qo-text)}
+#appRoot.qo-app .freeResultScoreBox,#appRoot.qo-app .freeResultMetrics>div{background:#F7FAFC;border-color:var(--qo-border);border-radius:var(--qo-radius-md)}
+#appRoot.qo-app .freeResultPanel{background:#fff}
+#appRoot.qo-app .freeAssessmentDisclaimer{background:#F7FAFC;border-color:var(--qo-border);color:var(--qo-muted);border-radius:var(--qo-radius-md)}
+#appRoot.qo-app .premiumResultIntro{background:#fff;border-color:#BBD7EA}
+#appRoot.qo-app .premiumFeaturePreview article{background:#F7FAFC;border-color:var(--qo-border);border-radius:var(--qo-radius-md)}
+#appRoot.qo-app .metricCard,#appRoot.qo-app .panel{background:#fff}
+#appRoot.qo-app .riskCell.low{background:#F1F9F3;border-color:#CCE7D3}
+#appRoot.qo-app .riskCell.medium{background:#FFF8E8;border-color:#EAD09B}
+#appRoot.qo-app .riskCell.high{background:#FFF0EE;border-color:#EBC0BC}
+
+/* Report / login / modals */
+#appRoot.qo-app .reportStep{background:#F7FAFC;border-color:var(--qo-border);border-radius:var(--qo-radius-md)}
+#appRoot.qo-app .reportStep.active{background:#F0F7FD;border-color:#A9CCE4}
+#appRoot.qo-app .reportStep.active .num{background:var(--qo-blue-600);color:#fff}
+#appRoot.qo-app .reportCheck{background:#fff;border-color:var(--qo-border);border-radius:var(--qo-radius-sm)}
+.publicModal .modalCard,#appRoot.qo-app .modalCard,#appRoot.qo-app .answersModalCard{background:#fff;border:1px solid var(--qo-border);border-radius:var(--qo-radius-lg);color:var(--qo-text);box-shadow:var(--qo-shadow-lg)}
+.publicModal{background:rgba(6,24,43,.46);backdrop-filter:blur(5px)}
+.qoLoginCard{max-width:440px}
+.qoLoginBrand{display:grid;justify-items:start;gap:4px;margin-bottom:18px}
+.qoLoginBrand .qoBrandAssetFull{height:34px;width:auto}
+.qoLoginBrand small{color:var(--qo-muted);font-size:10px}
+
+/* Main content transition only */
+#appRoot.qo-app .screen.active,#appRoot.qo-app .dashboardView.active{animation:qoPageEnter 200ms var(--qo-ease) both}
+@keyframes qoPageEnter{from{opacity:.96;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:1100px){
+  #publicLanding.qo-public-home .qoReferenceHeroGrid{grid-template-columns:1fr}
+  #publicLanding.qo-public-home .qoReferenceHeroCopy{padding:52px 5vw 40px}
+  #publicLanding.qo-public-home .qoReferenceHeroCopyInner{max-width:760px;margin-inline:auto}
+  #publicLanding.qo-public-home .qoReferenceHeroVisual{min-height:0}
+  #publicLanding.qo-public-home .qoHeroProductDemo{left:auto;top:auto;transform:none}
+  #publicLanding.qo-public-home .qoProcessContainer{width:92vw}
+}
+@media(max-width:700px){
+  #appRoot.qo-app .side{background:var(--qo-navy-900)}
+  #appRoot.qo-app .main{background:var(--qo-bg)}
+}
+@media(prefers-reduced-motion:reduce){
+  #appRoot.qo-app .screen.active,#appRoot.qo-app .dashboardView.active{animation:none;transform:none}
+}
+
+
+#publicLanding.qo-public-home .qoHeroHeadline{max-width:565px}
+#publicLanding.qo-public-home .qoHeroBenefits{max-width:560px}
+#publicLanding.qo-public-home .qoHeroCtas{max-width:560px}
+#publicLanding.qo-public-home .qoHeroTrust{max-width:565px}
+
+/* Visible keyboard focus across public and internal product controls. */
+.qo-public-home a:focus-visible,
+.qo-public-home button:focus-visible,
+#appRoot.qo-app a:focus-visible,
+#appRoot.qo-app button:focus-visible,
+#appRoot.qo-app input:focus-visible,
+#appRoot.qo-app select:focus-visible,
+#appRoot.qo-app textarea:focus-visible{
+  outline:3px solid rgba(8,127,229,.26);
+  outline-offset:2px;
+}
+
+/* Mobile product demo must never exceed its content column. */
+@media(max-width:700px){
+  #publicLanding.qo-public-home .qoHeroDashboardCard{
+    width:100%;
+    min-width:0;
+    box-sizing:border-box;
+  }
+}
