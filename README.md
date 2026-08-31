@@ -12,10 +12,14 @@ La fuente verificada del paquete `QualityOps_SOURCE_ONLY_2026-08-30.zip` está d
 El HTML conserva el SHA-256 del archivo fuente recibido:
 
 ```text
-0ed52ec3af357d075f969d906994234ac5e9b04bb4dc9a29e2bed3a2023f0eb5
+68915941487f834713d6b3a119a23c720e754820f2365dcf4c7a088bd4368f33
 ```
 
 La aplicación es un único frontend en HTML, CSS y JavaScript sin framework ni backend. Incluye landing, assessment de 18 preguntas, resultados, dashboard y generación de informe PDF.
+
+## Identidad visual
+
+La identidad visual se alineó con la referencia de marca aprobada: símbolo hexagonal con check, wordmark QualityOps bicolor, lema “ISO READINESS. SIMPLIFIED.”, navy profundo y azul eléctrico. La lógica funcional del baseline se conserva.
 
 ## Assets
 
