@@ -1,4 +1,4 @@
-name: Validate migration baseline
+name: Validate source baseline
 
 on:
   push:
@@ -14,41 +14,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Validate required source files
         shell: bash
         run: |
           set -euo pipefail
 
-          required=(
-            "qualityops.html"
-            "assets/css/qualityops-design-system.css"
-            "assets/brand/qualityops-favicon.svg"
-            "assets/brand/favicon-32.png"
-            "assets/brand/favicon-16.png"
-            "assets/brand/qualityops-apple-touch-icon.png"
-            "assets/brand/qualityops-logo-dark.svg"
-            "assets/brand/qualityops-pdf-logo-light.png"
-          )
+          test -s qualityops.html
+          test -s assets/css/qualityops-design-system.css
 
-          missing=0
-          for path in "${required[@]}"; do
-            if [[ ! -s "$path" ]]; then
-              echo "::error file=$path::Required migration file is missing or empty"
-              missing=1
-            fi
-          done
-
-          if [[ -f qualityops.html ]]; then
-            bytes=$(wc -c < qualityops.html)
-            if (( bytes < 700000 )); then
-              echo "::error file=qualityops.html::File is unexpectedly small ($bytes bytes); expected the complete ~789 KB source"
-              missing=1
-            fi
+          expected="0ed52ec3af357d075f969d906994234ac5e9b04bb4dc9a29e2bed3a2023f0eb5"
+          actual="$(sha256sum qualityops.html | cut -d' ' -f1)"
+          if [[ "$actual" != "$expected" ]]; then
+            echo "::error file=qualityops.html::SHA-256 mismatch: expected $expected, got $actual"
+            exit 1
           fi
 
           if find . -path './.git' -prune -o -path './.import/*' -print -quit | grep -q .; then
             echo "::error::.import contains temporary migration fragments"
-            missing=1
+            exit 1
           fi
 
-          exit "$missing"
+      - name: Check source for temporary routes
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -Ein '/tmp/|localhost|chatgpt\.com|openai\.com|sandbox:' qualityops.html; then
+            echo "::error file=qualityops.html::Temporary or development route detected"
+            exit 1
+          fi
