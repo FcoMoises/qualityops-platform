@@ -1,0 +1,54 @@
+name: Validate migration baseline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate required source files
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          required=(
+            "qualityops.html"
+            "assets/css/qualityops-design-system.css"
+            "assets/brand/qualityops-favicon.svg"
+            "assets/brand/favicon-32.png"
+            "assets/brand/favicon-16.png"
+            "assets/brand/qualityops-apple-touch-icon.png"
+            "assets/brand/qualityops-logo-dark.svg"
+            "assets/brand/qualityops-pdf-logo-light.png"
+          )
+
+          missing=0
+          for path in "${required[@]}"; do
+            if [[ ! -s "$path" ]]; then
+              echo "::error file=$path::Required migration file is missing or empty"
+              missing=1
+            fi
+          done
+
+          if [[ -f qualityops.html ]]; then
+            bytes=$(wc -c < qualityops.html)
+            if (( bytes < 700000 )); then
+              echo "::error file=qualityops.html::File is unexpectedly small ($bytes bytes); expected the complete ~789 KB source"
+              missing=1
+            fi
+          fi
+
+          if find . -path './.git' -prune -o -path './.import/*' -print -quit | grep -q .; then
+            echo "::error::.import contains temporary migration fragments"
+            missing=1
+          fi
+
+          exit "$missing"
