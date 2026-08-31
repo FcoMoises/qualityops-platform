@@ -1,0 +1,5 @@
+.import/
+*.b64
+*.zip
+.DS_Store
+Thumbs.db
