@@ -2,59 +2,64 @@
 
 Repositorio privado de la plataforma QualityOps.
 
-## Estado actual
+## Baseline restaurado
 
-La migración está **bloqueada hasta recuperar el paquete fuente original** `QualityOps_current_package(2).zip`.
+La fuente verificada del paquete `QualityOps_SOURCE_ONLY_2026-08-30.zip` está disponible como:
 
-Actualmente el repositorio contiene:
-
+- `qualityops.html`
 - `assets/css/qualityops-design-system.css`
-- documentación del proceso
-- una validación automática del baseline
 
-Todavía faltan:
+El HTML conserva el SHA-256 del archivo fuente recibido:
 
-- `qualityops.html` completo (el original tenía aproximadamente 789 KB)
-- `assets/brand/qualityops-favicon.svg`
-- `assets/brand/favicon-32.png`
-- `assets/brand/favicon-16.png`
-- `assets/brand/qualityops-apple-touch-icon.png`
-- `assets/brand/qualityops-logo-dark.svg`
-- `assets/brand/qualityops-pdf-logo-light.png`
+```text
+0ed52ec3af357d075f969d906994234ac5e9b04bb4dc9a29e2bed3a2023f0eb5
+```
 
-El fragmento Base64 incompleto usado durante el primer intento de migración fue retirado del árbol activo. No puede reconstruirse el ZIP porque solo llegó el primer fragmento.
+La aplicación es un único frontend en HTML, CSS y JavaScript sin framework ni backend. Incluye landing, assessment de 18 preguntas, resultados, dashboard y generación de informe PDF.
 
-## Validación automática
+## Assets
 
-El workflow `.github/workflows/validate-migration.yml` comprueba que:
+La fotografía principal está embebida en el HTML como WebP data URI. El análisis de referencias del baseline no encontró dependencias hacia los antiguos paths `assets/brand/*`; por tanto, esos archivos no son necesarios para ejecutar esta versión restaurada.
 
-- estén presentes todos los archivos requeridos;
-- `qualityops.html` no esté vacío ni truncado;
-- no se publiquen fragmentos temporales bajo `.import/`.
+El paquete fuente también incluye variantes de imágenes hero como material de respaldo, pero el baseline no depende de ellas.
 
-La validación permanecerá en rojo deliberadamente mientras falte el paquete fuente. No debe omitirse ni marcarse la migración como completada para silenciarla.
+## Dependencias externas
 
-## Dependencias externas detectadas
-
-El HTML original utilizaba desde jsDelivr:
+La generación de PDF usa:
 
 - `html2canvas@1.4.1`
 - `jspdf@2.5.1`
 
-Cuando se recupere el HTML, estas dependencias deben validarse y fijarse mediante un mecanismo reproducible antes del despliegue.
+Ambas se cargan desde jsDelivr. La aplicación principal funciona sin red, pero la generación binaria del PDF necesita acceso a esas CDN mientras no se vendorizan las dependencias.
 
-## Seguridad y conservación
+## Validación automática
 
-La revisión inicial no detectó claves Stripe, JWT de Supabase, claves AWS ni patrones evidentes de secretos en los archivos disponibles.
+El workflow `.github/workflows/validate-migration.yml` verifica:
 
-Hasta establecer un baseline funcional no se debe rediseñar ni refactorizar el frontend. La prioridad es conservar fielmente el original y verificar navegación, assessment, resultados y exportación PDF.
+- presencia del HTML y CSS;
+- SHA-256 exacto del HTML;
+- ausencia de fragmentos temporales bajo `.import/`;
+- ausencia de rutas locales o temporales.
 
-## Próximo paso obligatorio
+## Estado funcional conocido
 
-Recuperar o volver a adjuntar `QualityOps_current_package(2).zip`. Después:
+Validado desde una extracción limpia del paquete fuente:
 
-1. importar `qualityops.html` íntegro;
-2. restaurar o sustituir explícitamente los assets ausentes;
-3. ejecutar la validación y comprobar el frontend;
-4. revisar secretos y dependencias;
-5. continuar con arquitectura, autenticación y despliegue.
+- landing, hero y navegación;
+- onboarding y evaluación;
+- 18 respuestas y cálculo de resultados;
+- dashboard de resultados;
+- presencia del generador PDF.
+
+El PDF no pudo ejecutarse en la validación offline porque sus bibliotecas se cargan por CDN.
+
+## Seguridad
+
+El paquete y sus checksums fueron verificados antes de la importación. La revisión no encontró patrones evidentes de secretos ni rutas temporales en el HTML.
+
+## Próximos pasos
+
+1. Vendorizar o gestionar formalmente las dependencias de PDF.
+2. Añadir pruebas de navegador reproducibles.
+3. Definir hosting y cabeceras de seguridad.
+4. Introducir backend, autenticación o pagos únicamente en fases separadas.
