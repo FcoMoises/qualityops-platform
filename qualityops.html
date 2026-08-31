@@ -8711,6 +8711,106 @@ tbody tr:hover td{background:#0f1d2d!important}
   #publicLanding.qo-public-home .publicBrandCopy strong{font-size:15px}
   #publicLanding.qo-public-home .publicBrandCopy span{font-size:6.5px;letter-spacing:.16em}
 }
+
+/* Visual reference v2 — intentionally dominant so legacy rules cannot dilute the brand. */
+#publicLanding.qo-public-home .publicHeader{
+  min-height:76px!important;
+  background:#031a38!important;
+  background-image:linear-gradient(100deg,#02142d 0%,#031a38 72%,#052654 100%)!important;
+  border-bottom:1px solid rgba(19,148,255,.22)!important;
+}
+#publicLanding.qo-public-home .publicHeaderInner{
+  width:calc(100% - 64px)!important;max-width:1800px!important;
+  min-height:76px!important;height:76px!important;
+  grid-template-columns:290px minmax(0,1fr) auto!important;gap:24px!important;
+}
+#publicLanding.qo-public-home .publicBrand{
+  display:flex!important;align-items:center!important;flex-direction:row!important;
+  width:max-content!important;min-width:245px!important;gap:12px!important;
+}
+#publicLanding.qo-public-home .publicBrandMark{width:42px!important;height:46px!important;flex:0 0 42px!important}
+#publicLanding.qo-public-home .publicBrandCopy{
+  display:flex!important;flex-direction:column!important;align-items:flex-start!important;
+  gap:5px!important;width:auto!important;min-width:185px!important;
+}
+#publicLanding.qo-public-home .publicBrandCopy strong{
+  display:block!important;width:auto!important;white-space:nowrap!important;
+  color:#fff!important;font-size:20px!important;line-height:1!important;letter-spacing:-.035em!important;
+}
+#publicLanding.qo-public-home .publicBrandCopy>span{
+  display:block!important;width:auto!important;white-space:nowrap!important;
+  color:#a9bdd4!important;font-size:7px!important;line-height:1!important;
+  letter-spacing:.235em!important;text-transform:uppercase!important;
+}
+#publicLanding.qo-public-home .publicNav{margin-left:12px!important;gap:30px!important}
+#publicLanding.qo-public-home .publicNav a,
+#publicLanding.qo-public-home .publicNav button,
+#publicLanding.qo-public-home .linkBtn{font-size:12px!important;font-weight:700!important}
+#publicLanding.qo-public-home .publicHeader .publicPrimary{
+  min-height:44px!important;border-radius:8px!important;padding:0 22px!important;
+  background:linear-gradient(135deg,#0878ff 0%,#0865e7 100%)!important;
+}
+
+#publicLanding.qo-public-home #inicio-publico{
+  min-height:660px!important;
+  background:
+    radial-gradient(circle at 34% 32%,rgba(19,148,255,.08),transparent 30%),
+    linear-gradient(90deg,#fff 0%,#f8fbff 52%,#eef6ff 100%)!important;
+}
+#publicLanding.qo-public-home #inicio-publico .qo-premium-hero{
+  min-height:660px!important;grid-template-columns:44% 56%!important;
+}
+#publicLanding.qo-public-home #inicio-publico .qo-premium-copy{
+  padding:42px 52px 42px 5.5vw!important;background:transparent!important;
+}
+#publicLanding.qo-public-home #inicio-publico .qo-premium-copy-inner{max-width:610px!important}
+#publicLanding.qo-public-home #inicio-publico .heroBadges{margin-bottom:25px!important;gap:10px!important}
+#publicLanding.qo-public-home #inicio-publico .heroBadge{
+  min-height:27px!important;padding:0 12px!important;border-radius:999px!important;
+  font-size:9px!important;letter-spacing:.04em!important;
+}
+#publicLanding.qo-public-home #inicio-publico .heroBadge:first-child{
+  color:#0568d7!important;background:#e5f2ff!important;border-color:#c7e0ff!important;
+}
+#publicLanding.qo-public-home #inicio-publico .heroBadge.alt{
+  color:#0878ff!important;background:transparent!important;border-color:transparent!important;
+}
+#publicLanding.qo-public-home #inicio-publico .heroCopy h1{
+  max-width:610px!important;margin-bottom:24px!important;
+  color:#061a38!important;font-size:clamp(48px,3.65vw,70px)!important;
+  line-height:1.015!important;letter-spacing:-.052em!important;font-weight:880!important;
+}
+#publicLanding.qo-public-home #inicio-publico .heroCopy h1 em{color:#0878ff!important}
+#publicLanding.qo-public-home #inicio-publico .heroLead{
+  max-width:590px!important;color:#415c78!important;font-size:15px!important;line-height:1.68!important;
+}
+#publicLanding.qo-public-home #inicio-publico .heroBenefits{margin:30px 0 32px!important;gap:15px 28px!important}
+#publicLanding.qo-public-home #inicio-publico .heroBenefits li{font-size:12.5px!important;color:#071a36!important}
+#publicLanding.qo-public-home #inicio-publico .heroCtas .publicPrimary{
+  min-width:240px!important;min-height:48px!important;border-radius:8px!important;
+}
+#publicLanding.qo-public-home #inicio-publico .heroCtas .publicSecondary{
+  min-height:48px!important;border-color:#a8bfd8!important;border-radius:8px!important;
+}
+#publicLanding.qo-public-home #inicio-publico .qo-premium-visual{min-height:660px!important;height:660px!important}
+#publicLanding.qo-public-home #inicio-publico .qo-premium-dashboard{
+  border:1px solid rgba(8,120,255,.16)!important;
+  box-shadow:0 26px 70px rgba(3,26,56,.22)!important;
+}
+#publicLanding.qo-public-home .publicSection{background-color:#fff}
+#publicLanding.qo-public-home .publicSection:nth-of-type(even){background-color:#f8fbff}
+
+@media(max-width:1180px){
+  #publicLanding.qo-public-home .publicHeaderInner{grid-template-columns:240px 1fr auto!important}
+  #publicLanding.qo-public-home .publicNav{gap:18px!important;margin-left:0!important}
+  #publicLanding.qo-public-home #inicio-publico .qo-premium-hero{grid-template-columns:1fr!important}
+}
+@media(max-width:700px){
+  #publicLanding.qo-public-home .publicHeaderInner{width:calc(100% - 28px)!important;grid-template-columns:1fr auto!important}
+  #publicLanding.qo-public-home .publicBrandCopy strong{font-size:17px!important}
+  #publicLanding.qo-public-home #inicio-publico .qo-premium-copy{padding:42px 22px!important}
+  #publicLanding.qo-public-home #inicio-publico .heroCopy h1{font-size:clamp(39px,12vw,54px)!important}
+}
 </style></head><body>
 <div class="publicLanding qo-public qo-public-home" data-home-areas="6" data-home-checks="18" data-home-duration="≈ 8 min" data-home-output="PDF" id="publicLanding">
 <header class="publicHeader">
@@ -8750,9 +8850,9 @@ tbody tr:hover td{background:#0f1d2d!important}
 <section class="publicHero" id="inicio-publico">
 <div class="heroInner hero-layout qo-home-hero qo-premium-hero">
 <div class="heroCopy qo-home-copy qo-premium-copy"><div class="qo-premium-copy-inner">
-<div class="heroBadges"><span class="heroBadge">NUEVA EDICIÓN</span><span class="heroBadge alt">ISO 9001:2026</span></div>
-<h1>Prepárate hoy para<br/>la transición a<br/><em>ISO 9001:2026</em></h1>
-<p class="heroLead">Evalúa tu sistema de gestión, obtén una lectura preliminar de preparación y recibe un plan de acción claro para avanzar con confianza.</p>
+<div class="heroBadges"><span class="heroBadge">NUEVA EVALUACIÓN</span><span class="heroBadge alt">Transición ISO 9001:2015 → ISO 9001:2026</span></div>
+<h1>Evalúa tu preparación<br/>para la transición a<br/><em>ISO 9001:2026</em></h1>
+<p class="heroLead">Responde 18 preguntas clave sobre tu sistema de gestión y obtén una evaluación preliminar de tu nivel de preparación para la transición.</p>
 <ul class="heroBenefits">
 <li><span class="checkMini">✓</span> Evaluación guiada por expertos</li>
 <li><span class="checkMini">✓</span> Score global y por áreas</li>
