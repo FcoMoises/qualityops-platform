@@ -2,23 +2,19 @@
 
 Repositorio privado de la plataforma QualityOps.
 
-## Estado de la migración
+## Estado actual
 
-Migración iniciada desde el paquete fuente `QualityOps_current_package(2).zip`.
+La migración está **bloqueada hasta recuperar el paquete fuente original** `QualityOps_current_package(2).zip`.
 
-### Archivos fuente detectados
+Actualmente el repositorio contiene:
 
-- `qualityops.html` (~789 KB)
-- `assets/css/qualityops-design-system.css` (~13 KB)
+- `assets/css/qualityops-design-system.css`
+- documentación del proceso
+- una validación automática del baseline
 
-El CSS ha sido importado como archivo nativo del repositorio.
+Todavía faltan:
 
-El HTML principal no se ha modificado. La integración usada para esta migración no permite adjuntar directamente un archivo local de este tamaño en una sola operación; por ello **no debe considerarse completada la migración del HTML hasta que `qualityops.html` aparezca íntegro en la raíz del repositorio**.
-
-## Incidencias del paquete de origen
-
-El HTML referencia recursos de marca que no están incluidos en el ZIP recibido:
-
+- `qualityops.html` completo (el original tenía aproximadamente 789 KB)
 - `assets/brand/qualityops-favicon.svg`
 - `assets/brand/favicon-32.png`
 - `assets/brand/favicon-16.png`
@@ -26,23 +22,39 @@ El HTML referencia recursos de marca que no están incluidos en el ZIP recibido:
 - `assets/brand/qualityops-logo-dark.svg`
 - `assets/brand/qualityops-pdf-logo-light.png`
 
-También utiliza dependencias externas desde jsDelivr:
+El fragmento Base64 incompleto usado durante el primer intento de migración fue retirado del árbol activo. No puede reconstruirse el ZIP porque solo llegó el primer fragmento.
+
+## Validación automática
+
+El workflow `.github/workflows/validate-migration.yml` comprueba que:
+
+- estén presentes todos los archivos requeridos;
+- `qualityops.html` no esté vacío ni truncado;
+- no se publiquen fragmentos temporales bajo `.import/`.
+
+La validación permanecerá en rojo deliberadamente mientras falte el paquete fuente. No debe omitirse ni marcarse la migración como completada para silenciarla.
+
+## Dependencias externas detectadas
+
+El HTML original utilizaba desde jsDelivr:
 
 - `html2canvas@1.4.1`
 - `jspdf@2.5.1`
 
-## Seguridad
+Cuando se recupere el HTML, estas dependencias deben validarse y fijarse mediante un mecanismo reproducible antes del despliegue.
 
-La revisión inicial no detectó claves Stripe, JWT de Supabase, AWS keys ni patrones evidentes de API secrets en los dos archivos del paquete.
+## Seguridad y conservación
 
-## Regla de conservación
+La revisión inicial no detectó claves Stripe, JWT de Supabase, claves AWS ni patrones evidentes de secretos en los archivos disponibles.
 
-Durante esta fase no se debe rediseñar ni refactorizar el frontend. La prioridad es preservar fielmente la versión HTML recibida antes de iniciar Cloudflare, Supabase, autenticación, leads o Stripe.
+Hasta establecer un baseline funcional no se debe rediseñar ni refactorizar el frontend. La prioridad es conservar fielmente el original y verificar navegación, assessment, resultados y exportación PDF.
 
-## Próximas fases
+## Próximo paso obligatorio
 
-1. Completar importación íntegra de `qualityops.html`.
-2. Recuperar los assets de marca ausentes.
-3. Crear baseline verificable.
-4. Validar frontend original.
-5. Continuar con arquitectura y despliegue según la Master Build Specification.
+Recuperar o volver a adjuntar `QualityOps_current_package(2).zip`. Después:
+
+1. importar `qualityops.html` íntegro;
+2. restaurar o sustituir explícitamente los assets ausentes;
+3. ejecutar la validación y comprobar el frontend;
+4. revisar secretos y dependencias;
+5. continuar con arquitectura, autenticación y despliegue.
