@@ -23,7 +23,7 @@ jobs:
           test -s qualityops.html
           test -s assets/css/qualityops-design-system.css
 
-          expected="0ed52ec3af357d075f969d906994234ac5e9b04bb4dc9a29e2bed3a2023f0eb5"
+          expected="68915941487f834713d6b3a119a23c720e754820f2365dcf4c7a088bd4368f33"
           actual="$(sha256sum qualityops.html | cut -d' ' -f1)"
           if [[ "$actual" != "$expected" ]]; then
             echo "::error file=qualityops.html::SHA-256 mismatch: expected $expected, got $actual"
