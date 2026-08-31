@@ -63,3 +63,7 @@ El paquete y sus checksums fueron verificados antes de la importación. La revis
 2. Añadir pruebas de navegador reproducibles.
 3. Definir hosting y cabeceras de seguridad.
 4. Introducir backend, autenticación o pagos únicamente en fases separadas.
+
+## Sitio web
+
+El sitio se despliega automáticamente mediante GitHub Pages desde la rama `main`.
