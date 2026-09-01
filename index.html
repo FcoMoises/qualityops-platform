@@ -2,13 +2,44 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta http-equiv="refresh" content="0;url=qualityops.html">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#06182B">
   <title>QualityOps</title>
-  <link rel="canonical" href="qualityops.html">
 </head>
 <body>
-  <p><a href="qualityops.html">Abrir QualityOps</a></p>
-  <script>location.replace("qualityops.html");</script>
+  <noscript>QualityOps necesita JavaScript para ejecutar la evaluación.</noscript>
+  <script>
+    (async function loadQualityOps(){
+      try{
+        const response = await fetch('qualityops.html', { cache: 'no-store' });
+        if(!response.ok) throw new Error('No se pudo cargar QualityOps: HTTP ' + response.status);
+
+        let html = await response.text();
+
+        /*
+          El HTML ya contiene el sistema visual claro unificado, pero sus reglas
+          internas están vinculadas a #appRoot.qo-app. Activamos esa clase antes
+          de que el documento sea interpretado para evitar que sobreviva el tema
+          oscuro heredado en onboarding, preguntas, resultados e informe.
+        */
+        html = html.replace(
+          'class="app appHidden" id="appRoot"',
+          'class="app appHidden qo-app" id="appRoot"'
+        );
+
+        html = html.replace(
+          'content="#07111d" name="theme-color"',
+          'content="#06182B" name="theme-color"'
+        );
+
+        document.open();
+        document.write(html);
+        document.close();
+      }catch(error){
+        console.error(error);
+        document.body.innerHTML = '<main style="font-family:Inter,Arial,sans-serif;padding:32px;color:#0A2540;background:#fff;min-height:100vh"><h1>QualityOps</h1><p>No se ha podido cargar la aplicación.</p><p><a href="qualityops.html" style="color:#087FE5">Abrir QualityOps directamente</a></p></main>';
+      }
+    })();
+  </script>
 </body>
 </html>
