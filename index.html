@@ -16,12 +16,7 @@
 
         let html = await response.text();
 
-        /*
-          El HTML ya contiene el sistema visual claro unificado, pero sus reglas
-          internas están vinculadas a #appRoot.qo-app. Activamos esa clase antes
-          de que el documento sea interpretado para evitar que sobreviva el tema
-          oscuro heredado en onboarding, preguntas, resultados e informe.
-        */
+        /* Activa el sistema visual claro ya existente en la aplicación. */
         html = html.replace(
           'class="app appHidden" id="appRoot"',
           'class="app appHidden qo-app" id="appRoot"'
@@ -31,6 +26,93 @@
           'content="#07111d" name="theme-color"',
           'content="#06182B" name="theme-color"'
         );
+
+        /*
+          Regla visual definitiva:
+          la HOME y todas las vistas internas comparten lienzo blanco.
+          Navy y azul quedan reservados para navegación, marca, CTAs y estados.
+        */
+        const unifiedLightTheme = `
+<style id="qualityops-unified-white-theme">
+html,body{background:#fff!important;color-scheme:light!important}
+body,button,input,select,textarea{color-scheme:light!important}
+#appRoot.qo-app,
+#appRoot.qo-app .shell,
+#appRoot.qo-app .main,
+#appRoot.qo-app .screen,
+#appRoot.qo-app .setupView,
+#appRoot.qo-app .setupCanvas,
+#appRoot.qo-app .assessmentWorkspace,
+#appRoot.qo-app .dashboardView,
+#appRoot.qo-app .detailView,
+#appRoot.qo-app[data-screen="assessmentSetup"],
+#appRoot.qo-app[data-screen="assessmentSetup"] .main,
+#appRoot.qo-app[data-screen="formScreen"],
+#appRoot.qo-app[data-screen="formScreen"] .main,
+#appRoot.qo-app[data-screen="dashboard"],
+#appRoot.qo-app[data-screen="dashboard"] .main{
+  background:#fff!important;
+}
+#appRoot.qo-app .header{
+  background:#fff!important;
+  color:#061A38!important;
+}
+#appRoot.qo-app .setupCard,
+#appRoot.qo-app .setupContextPanel,
+#appRoot.qo-app .assessmentProgressBar,
+#appRoot.qo-app .qcard,
+#appRoot.qo-app .contextCard,
+#appRoot.qo-app .quickCard,
+#appRoot.qo-app .card,
+#appRoot.qo-app .metricCard,
+#appRoot.qo-app .panel,
+#appRoot.qo-app .auditMetaItem,
+#appRoot.qo-app .detailItem,
+#appRoot.qo-app .actionCard,
+#appRoot.qo-app .reportCard,
+#appRoot.qo-app .reportSummaryCard,
+#appRoot.qo-app .reportEmpty,
+#appRoot.qo-app .generationBox,
+#appRoot.qo-app .downloadBox,
+#appRoot.qo-app .evaluatedOrgCard,
+#appRoot.qo-app .freeResultOverview,
+#appRoot.qo-app .freeResultPanel,
+#appRoot.qo-app .premiumResultIntro,
+#appRoot.qo-app .postAssessmentNextStep{
+  background:#fff!important;
+  border-color:#DCE7F2!important;
+  color:#0B2945!important;
+}
+#appRoot.qo-app .setupField input,
+#appRoot.qo-app .setupField select,
+#appRoot.qo-app .field input,
+#appRoot.qo-app .field select,
+#appRoot.qo-app .opt,
+#appRoot.qo-app .setupCheck,
+#appRoot.qo-app .reportCheck{
+  background:#fff!important;
+  color:#0B2945!important;
+}
+#appRoot.qo-app .setupHead h2,
+#appRoot.qo-app .setupCardHead h3,
+#appRoot.qo-app .qcard h3,
+#appRoot.qo-app .detailHeader h2,
+#appRoot.qo-app .reportHead h2{
+  color:#061A38!important;
+}
+#appRoot.qo-app .setupHead p,
+#appRoot.qo-app .setupCardHead p,
+#appRoot.qo-app .questionHint,
+#appRoot.qo-app .detailHeader p{
+  color:#60758A!important;
+}
+@media(max-width:700px){
+  #appRoot.qo-app .top{background:#06182B!important}
+  #appRoot.qo-app .header{background:#fff!important}
+}
+</style>`;
+
+        html = html.replace('</head>', unifiedLightTheme + '</head>');
 
         document.open();
         document.write(html);
