@@ -1,103 +1,19 @@
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#06182B">
-  <title>QualityOps</title>
-</head>
-<body>
-  <noscript>QualityOps necesita JavaScript para ejecutar la evaluación.</noscript>
-  <main id="qoLoader" style="font-family:Inter,Arial,sans-serif;min-height:100vh;display:grid;place-items:center;background:#fff;color:#061A38;padding:24px"><div style="text-align:center"><strong style="font-size:22px">QualityOps</strong><p style="color:#60758A">Cargando evaluación…</p></div></main>
-  <script>
-    (async function loadQualityOps(){
-      const ENGINE_PARTS=6;
-      const getText=async(url)=>{
-        const r=await fetch(url,{cache:'no-store'});
-        if(!r.ok)throw new Error('No se pudo cargar '+url+': HTTP '+r.status);
-        return r.text();
-      };
-      const gunzipBase64=async(b64)=>{
-        if(typeof DecompressionStream!=='function')throw new Error('Este navegador no admite la descompresión necesaria para iniciar la evaluación.');
-        const binary=atob(b64.replace(/\s+/g,''));
-        const bytes=new Uint8Array(binary.length);
-        for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
-        const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
-        return new Response(stream).text();
-      };
-      try{
-        const [source,...parts]=await Promise.all([
-          getText('qualityops.html'),
-          ...Array.from({length:ENGINE_PARTS},(_,i)=>getText('assets/assessment/engine-v09-'+(i+1)+'.txt'))
-        ]);
-        let html=source;
-        const newEngine=await gunzipBase64(parts.join(''));
-        if(!newEngine.includes("const ASSESSMENT_VERSION='ISO9001-2026-v0.9'"))throw new Error('El motor ISO 9001:2026 no se ha cargado correctamente.');
-        if(!newEngine.includes('"id":"Q60"'))throw new Error('La batería de 60 preguntas está incompleta.');
-
-        // Activa el sistema visual claro.
-        html=html.replace('class="app appHidden" id="appRoot"','class="app appHidden qo-app" id="appRoot"');
-        html=html.replace('content="#07111d" name="theme-color"','content="#06182B" name="theme-color"');
-
-        // Metadatos y textos públicos coherentes con la nueva evaluación.
-        html=html.replace(/data-home-areas="\d+"/,'data-home-areas="7"')
-                 .replace(/data-home-checks="\d+"/,'data-home-checks="60"')
-                 .replace(/data-home-duration="[^"]*"/,'data-home-duration="≈ 10–15 min"');
-        html=html.replace(/Contesta 18 preguntas clave sobre tu sistema de gestión\./g,'Contesta 60 preguntas estructuradas sobre tu sistema de gestión.');
-        html=html.replace(/18 preguntas/g,'60 preguntas').replace(/64 preguntas/g,'60 preguntas');
-        html=html.replace(/6 áreas/g,'7 áreas').replace(/11 áreas/g,'7 áreas');
-        html=html.replace(/11 \/ 11/g,'7 / 7').replace(/11 de 11 áreas/g,'7 de 7 áreas');
-        html=html.replace(/≈ 8 min/g,'≈ 10–15 min');
-
-        // Demo de la home: Q17, Q49 y Q58.
-        html=html.replace(
-          '<h3 id="methodDemoQuestionTitle" data-demo-question-id="P6"></h3>',
-          '<div class="methodDemoStepLabel" id="methodDemoStepLabel">Control 1 de 3</div><h3 id="methodDemoQuestionTitle" data-demo-question-id="Q17"></h3>'
-        );
-        html=html.replace(
-          /(<fieldset class="methodDemoOptionsV2" id="methodDemoOptionsV2">[\s\S]*?<\/fieldset>)/,
-          '$1<div class="methodDemoNavV2"><button class="publicSecondary" id="methodDemoPrevBtn" type="button">← Anterior</button><button class="publicPrimary" id="methodDemoNextBtn" type="button">Siguiente control →</button></div>'
-        );
-
-        // Segunda capa del assessment: evidencia, N/A justificado y subpreguntas.
-        const assessmentAddon=`<section class="qoEvidenceAssessment" id="qoEvidenceAssessment" hidden>
-          <div class="qoEvidenceHead"><div><span class="eyebrow">EVIDENCIA OBJETIVA</span><h4>¿Qué nivel de evidencia dispone para demostrar esta situación?</h4></div><span class="qoEvidenceTag">Afecta a la confianza del diagnóstico</span></div>
-          <div class="qoEvidenceOptions" id="evidenceOptions"></div>
-        </section>
-        <section class="qoNaAssessment" id="qoNaAssessment" hidden>
-          <label for="naJustification"><strong>Justificación de “No aplica”</strong><span>Explique por qué este elemento no resulta aplicable a su organización. Mínimo 20 caracteres.</span></label>
-          <textarea id="naJustification" rows="3" maxlength="800" placeholder="Describe el motivo de la exclusión..."></textarea><small id="naCharCount">0 / 20 caracteres mínimos</small>
-        </section>
-        <section class="qoConditionalAssessment" id="qoConditionalAssessment" hidden>
-          <div class="qoConditionalHead"><strong>Información complementaria</strong><span>Ayuda a contextualizar el diagnóstico.</span></div><div id="conditionalQuestions"></div>
-        </section>`;
-        if(!html.includes('id="qoEvidenceAssessment"')){
-          html=html.replace(/(<div class="options" id="options"><\/div>\s*<\/fieldset>)/,'$1'+assessmentAddon);
-        }
-
-        // Sustituye el motor antiguo completo; no conviven dos sistemas de scoring.
-        const oldStart=html.indexOf('const questionUX=');
-        const oldEnd=oldStart>=0?html.indexOf('<\/script>',oldStart):-1;
-        if(oldStart<0||oldEnd<0)throw new Error('No se ha localizado el motor antiguo de preguntas para sustituirlo.');
-        html=html.slice(0,oldStart)+newEngine+'\n'+html.slice(oldEnd);
-
-        const unifiedStyles=`<style id="qualityops-assessment-v09-runtime">
-html,body{background:#fff!important;color-scheme:light!important}body,button,input,select,textarea{color-scheme:light!important}
-#appRoot.qo-app,#appRoot.qo-app .shell,#appRoot.qo-app .main,#appRoot.qo-app .screen,#appRoot.qo-app .setupView,#appRoot.qo-app .setupCanvas,#appRoot.qo-app .assessmentWorkspace,#appRoot.qo-app .dashboardView,#appRoot.qo-app .detailView,#appRoot.qo-app[data-screen="assessmentSetup"],#appRoot.qo-app[data-screen="assessmentSetup"] .main,#appRoot.qo-app[data-screen="formScreen"],#appRoot.qo-app[data-screen="formScreen"] .main,#appRoot.qo-app[data-screen="dashboard"],#appRoot.qo-app[data-screen="dashboard"] .main{background:#fff!important;color:#061A38!important}
-#appRoot.qo-app .header{background:#fff!important;color:#061A38!important}
-#appRoot.qo-app .setupCard,#appRoot.qo-app .setupContextPanel,#appRoot.qo-app .assessmentProgressBar,#appRoot.qo-app .qcard,#appRoot.qo-app .contextCard,#appRoot.qo-app .quickCard,#appRoot.qo-app .card,#appRoot.qo-app .metricCard,#appRoot.qo-app .panel,#appRoot.qo-app .auditMetaItem,#appRoot.qo-app .detailItem,#appRoot.qo-app .actionCard,#appRoot.qo-app .reportCard,#appRoot.qo-app .reportSummaryCard,#appRoot.qo-app .reportEmpty,#appRoot.qo-app .generationBox,#appRoot.qo-app .downloadBox,#appRoot.qo-app .evaluatedOrgCard,#appRoot.qo-app .freeResultOverview,#appRoot.qo-app .freeResultPanel,#appRoot.qo-app .premiumResultIntro,#appRoot.qo-app .postAssessmentNextStep{background:#fff!important;border-color:#DCE7F2!important;color:#0B2945!important}
-#appRoot.qo-app .setupField input,#appRoot.qo-app .setupField select,#appRoot.qo-app .field input,#appRoot.qo-app .field select,#appRoot.qo-app .opt,#appRoot.qo-app .setupCheck,#appRoot.qo-app .reportCheck{background:#fff!important;color:#0B2945!important}
-.qoEvidenceAssessment,.qoNaAssessment,.qoConditionalAssessment{margin-top:18px;padding:18px;border:1px solid #dfe7f0;border-radius:16px;background:#f8fbfe}.qoEvidenceAssessment[hidden],.qoNaAssessment[hidden],.qoConditionalAssessment[hidden]{display:none!important}.qoEvidenceHead{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:14px}.qoEvidenceHead h4{margin:4px 0 0;font-size:16px;line-height:1.35;color:#061A38}.qoEvidenceTag{font-size:11px;font-weight:800;color:#1769aa;background:#eaf5ff;border-radius:999px;padding:7px 10px;white-space:nowrap}.qoEvidenceOptions{display:grid;gap:9px}.qoEvidenceOption{display:flex;gap:12px;align-items:flex-start;padding:13px 14px;border:1px solid #d8e2ec;border-radius:12px;background:#fff;cursor:pointer}.qoEvidenceOption.selected{border-color:#087fe5;box-shadow:0 0 0 2px rgba(8,127,229,.09)}.qoEvidenceOption input{position:absolute;opacity:0;pointer-events:none}.qoEvidenceRadio{width:18px;height:18px;border:2px solid #aebdca;border-radius:50%;margin-top:1px;flex:0 0 auto;position:relative}.qoEvidenceOption.selected .qoEvidenceRadio{border-color:#087fe5}.qoEvidenceOption.selected .qoEvidenceRadio:after{content:"";position:absolute;inset:3px;border-radius:50%;background:#087fe5}.qoEvidenceOption strong{display:block;font-size:14px;color:#061A38}.qoEvidenceOption small{display:block;margin-top:3px;color:#60758a;font-size:12px;line-height:1.45}.qoNaAssessment label{display:block;color:#061A38}.qoNaAssessment label strong{display:block;font-size:14px}.qoNaAssessment label span{display:block;margin-top:4px;font-size:12px;color:#60758a}.qoNaAssessment textarea{width:100%;margin-top:10px;resize:vertical;border:1px solid #cdd9e4;border-radius:11px;padding:12px;font:inherit;box-sizing:border-box;background:#fff;color:#061A38}.qoNaAssessment small{display:block;margin-top:6px;color:#60758a}.qoConditionalHead{display:flex;justify-content:space-between;gap:12px;margin-bottom:12px}.qoConditionalHead strong{color:#061A38}.qoConditionalHead span{font-size:12px;color:#60758a}#conditionalQuestions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.qoConditionalField{display:grid;gap:6px;font-size:12px;color:#60758a}.qoConditionalField input,.qoConditionalField select{min-height:42px;border:1px solid #cdd9e4;border-radius:10px;padding:8px 10px;background:#fff;font:inherit;color:#061A38}.methodDemoStepLabel{font-size:12px;font-weight:850;letter-spacing:.04em;text-transform:uppercase;color:#087fe5;margin:6px 0 10px}.methodDemoNavV2{display:flex;justify-content:space-between;gap:12px;margin-top:16px}.methodDemoNavV2 button{min-height:44px}.freeAreaRow>span{display:flex;flex-direction:column;gap:2px}.freeAreaRow>span small{font-size:10px;font-weight:650;color:#60758a}
-@media(max-width:720px){#appRoot.qo-app .top{background:#06182B!important}.qoEvidenceHead,.qoConditionalHead{display:grid}.qoEvidenceTag{white-space:normal;width:max-content;max-width:100%}#conditionalQuestions{grid-template-columns:1fr}.methodDemoNavV2{display:grid;grid-template-columns:1fr 1fr}}
-</style>`;
-        html=html.replace('</head>',unifiedStyles+'</head>');
-
-        document.open();document.write(html);document.close();
-      }catch(error){
-        console.error(error);
-        document.body.innerHTML='<main style="font-family:Inter,Arial,sans-serif;padding:32px;color:#0A2540;background:#fff;min-height:100vh"><h1>QualityOps</h1><p>No se ha podido cargar la evaluación.</p><pre style="white-space:pre-wrap;color:#b42318">'+String(error.message||error)+'</pre><p><a href="qualityops.html" style="color:#087FE5">Abrir versión base</a></p></main>';
-      }
-    })();
-  </script>
-</body>
-</html>
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#06182B"><title>QualityOps</title></head><body><noscript>QualityOps necesita JavaScript.</noscript><div id="loader" style="min-height:100vh;display:grid;place-items:center;font:16px Inter,Arial;background:#fff;color:#061a38">Cargando QualityOps…</div><script>
+(async()=>{try{
+const files=['1','2','3','4a','4b','5','6'];
+const get=async u=>{const r=await fetch(u,{cache:'no-store'});if(!r.ok)throw Error(u+' HTTP '+r.status);return r.text()};
+const [base,...parts]=await Promise.all([get('qualityops.html'),...files.map(x=>get('assets/assessment/engine-v09-'+x+'.txt'))]);
+const b=atob(parts.join('').replace(/\s/g,'')),a=new Uint8Array(b.length);for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i);
+if(typeof DecompressionStream!=='function')throw Error('Safari necesita una versión actualizada para ejecutar la evaluación.');
+const engine=await new Response(new Blob([a]).stream().pipeThrough(new DecompressionStream('gzip'))).text();
+if(!engine.includes("const ASSESSMENT_VERSION='ISO9001-2026-v0.9'")||!engine.includes('"id":"Q60"'))throw Error('Motor de 60 preguntas incompleto.');
+let h=base.replace('class="app appHidden" id="appRoot"','class="app appHidden qo-app" id="appRoot"').replace('content="#07111d" name="theme-color"','content="#06182B" name="theme-color"');
+h=h.replace(/data-home-areas="\d+"/,'data-home-areas="7"').replace(/data-home-checks="\d+"/,'data-home-checks="60"').replace(/data-home-duration="[^"]*"/,'data-home-duration="≈ 10–15 min"').replace(/18 preguntas/g,'60 preguntas').replace(/64 preguntas/g,'60 preguntas').replace(/6 áreas/g,'7 áreas').replace(/11 áreas/g,'7 áreas').replace(/≈ 8 min/g,'≈ 10–15 min');
+h=h.replace('<h3 id="methodDemoQuestionTitle" data-demo-question-id="P6"></h3>','<div id="methodDemoStepLabel" style="font-size:12px;font-weight:800;color:#087fe5;margin-bottom:8px">Control 1 de 3</div><h3 id="methodDemoQuestionTitle" data-demo-question-id="Q17"></h3>');
+h=h.replace(/(<fieldset class="methodDemoOptionsV2" id="methodDemoOptionsV2">[\s\S]*?<\/fieldset>)/,'$1<div style="display:flex;gap:10px;justify-content:space-between;margin-top:14px"><button class="publicSecondary" id="methodDemoPrevBtn" type="button">← Anterior</button><button class="publicPrimary" id="methodDemoNextBtn" type="button">Siguiente control →</button></div>');
+const add=`<section id="qoEvidenceAssessment" hidden style="margin-top:18px;padding:16px;border:1px solid #dce7f2;border-radius:14px;background:#fff"><strong>Evidencia objetiva</strong><p style="color:#60758a">¿Qué nivel de evidencia dispone para demostrar esta situación?</p><div id="evidenceOptions"></div></section><section id="qoNaAssessment" hidden style="margin-top:18px;padding:16px;border:1px solid #dce7f2;border-radius:14px;background:#fff"><label for="naJustification"><strong>Justificación de “No aplica”</strong></label><textarea id="naJustification" rows="3" maxlength="800" style="width:100%;margin-top:8px"></textarea><small id="naCharCount">0 / 20 caracteres mínimos</small></section><section id="qoConditionalAssessment" hidden style="margin-top:18px;padding:16px;border:1px solid #dce7f2;border-radius:14px;background:#fff"><strong>Información complementaria</strong><div id="conditionalQuestions"></div></section>`;
+if(!h.includes('id="qoEvidenceAssessment"'))h=h.replace(/(<div class="options" id="options"><\/div>\s*<\/fieldset>)/,'$1'+add);
+const s=h.indexOf('const questionUX='),e=s>=0?h.indexOf('<\/script>',s):-1;if(s<0||e<0)throw Error('No se localizó el motor antiguo.');h=h.slice(0,s)+engine+'\n'+h.slice(e);
+const css=`<style>html,body,#appRoot.qo-app,#appRoot.qo-app .shell,#appRoot.qo-app .main,#appRoot.qo-app .screen{background:#fff!important;color-scheme:light!important}.qoEvidenceOption{display:flex;gap:10px;padding:12px;margin:8px 0;border:1px solid #dce7f2;border-radius:10px;background:#fff}.qoEvidenceOption.selected{border-color:#087fe5;background:#eef6ff}#conditionalQuestions{display:grid;gap:10px;margin-top:10px}.qoConditionalField{display:grid;gap:5px}.qoConditionalField input,.qoConditionalField select,#naJustification{border:1px solid #cbdbea;border-radius:9px;padding:10px;background:#fff;color:#0b2945}</style>`;h=h.replace('</head>',css+'</head>');document.open();document.write(h);document.close();
+}catch(e){console.error(e);document.body.innerHTML='<main style="padding:28px;font:16px Inter,Arial;color:#061a38"><h1>QualityOps</h1><p>No se pudo cargar la evaluación.</p><pre>'+String(e.message||e)+'</pre></main>'}})();
+</script></body></html>
